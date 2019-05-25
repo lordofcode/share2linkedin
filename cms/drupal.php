@@ -177,7 +177,7 @@ if (isset($LINKEDINSHAREMODULE_LOADED))
             
             mysql_close($dbconn);  
 
-            return array("AUTHOR" => $author, "DESCRIPTION" => $description, "TITLE" => $title, "COMMENT" => $comment);
+            return array("AUTHOR" => $author, "DESCRIPTION" => $description, "TITLE" => $title, "COMMENT" => $comment, "URL" => $url);
         }
 
         public function registerSharedPost($postID, $linkedInID)
