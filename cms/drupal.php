@@ -117,7 +117,7 @@ if (isset($LINKEDINSHAREMODULE_LOADED))
                 }
                 else
                 {
-                    mysql_query("UPDATE ".$this->prefix.$this->configTable." SET value='".addslashes($value)."' WHERE name='".addslashes($value)."'");
+                    mysql_query("UPDATE ".$this->prefix.$this->configTable." SET value='".addslashes($value)."' WHERE name='".addslashes($name)."'");
                 }
             }
 
@@ -142,6 +142,15 @@ if (isset($LINKEDINSHAREMODULE_LOADED))
             mysql_close($dbconn);    
             
             return $field;
+        }
+
+        public function fetchLastFivePosts()
+        {
+            $dbconn = mysql_connect($this->host, $this->user, $this->pass);
+            mysql_select_db($this->database, $dbconn);
+            $result = mysql_query("SELECT nid, type, title, changed FROM ".$this->prefix."node_field_data WHERE status=1 ORDER BY changed DESC LIMIT 0,5");     
+            mysql_close($dbconn);    
+            return $result;
         }
 
         public function fetchPostFields($postID)

@@ -10,6 +10,7 @@ if (isset($LINKEDINSHAREMODULE_LOADED))
     require_once("linkedin/iLinkedInConnector.php");
     require_once("linkedin/LinkedInConnectorv2.php");
     $linkedInConnector = new LinkedInConnectorV2();
+    $linkedInConnector->initialize($fileLocation);
 
     require_once("cms/ilinkedinsharemodule.php");
     $shareModule = null;

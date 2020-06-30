@@ -1,10 +1,17 @@
 <?php
     class LinkedInConnectorV2 implements iLinkedInConnector
     {
+        private $fileLocation;
+
+        public function initialize($fileLocation)
+        {
+            $this->fileLocation = $fileLocation;
+        }
+
         public function registerAccess($clientID, $hash)
         {
             global $_SERVER;
-            $redirectUri = "https://".$_SERVER["SERVER_NAME"].$fileLocation."/callback";
+            $redirectUri = "https://".$_SERVER["SERVER_NAME"].$this->fileLocation."/callback";
             $scope="r_liteprofile%20r_emailaddress%20w_member_social";
             $location = "https://www.linkedin.com/oauth/v2/authorization?response_type=code&client_id=".$clientID."&redirect_uri=".$redirectUri."&state=".$hash."&scope=".$scope;
             header("Location: ".$location);            
@@ -18,7 +25,7 @@
             if ($state != $hash) die("wrong call of the page");
         
             global $_SERVER;
-            $redirectUri = "https://".$_SERVER["SERVER_NAME"].$fileLocation."/callback";            
+            $redirectUri = "https://".$_SERVER["SERVER_NAME"].$this->fileLocation."/callback";            
             $url = "https://www.linkedin.com/oauth/v2/accessToken";
             $postdata = "grant_type=authorization_code&code=".$code."&redirect_uri=".$redirectUri."&client_id=".$clientID."&client_secret=".$clientSecret;
             $ch = curl_init($url);
